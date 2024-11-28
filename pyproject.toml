@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "keyboard-calibration"
+version = "0.1.0"
+description = "A project to calibrate keyboard key positions from an image and generate a list of key centers."
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://example.com/keyboard-calibration"
+repository = "https://github.com/your-username/keyboard-calibration"
+keywords = ["opencv", "keyboard", "image-processing", "calibration"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+opencv-python = "^4.10.0"
+numpy = "^1.24.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
