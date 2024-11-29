@@ -16,7 +16,7 @@ Ce projet est un keylogger qui enregistre les appuis de touche et génère :
 
 ### Prérequis
 
-- Python 3.1
+- Python 3.13
 - Les bibliothèques nécessaires sont listées dans `requirements.txt`.
 
 ### Installation des dépendances
