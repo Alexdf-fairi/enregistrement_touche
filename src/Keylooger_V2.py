@@ -7,6 +7,7 @@ import matplotlib.colors as mcolors
 # Variable globale pour stocker les touches enregistrées
 touches_appuyees = []
 enregistrement = False
+esc_press_count = 0  # Compteur d'appuis sur la touche Échap
 
 # Disposition du clavier (clavier AZERTY simplifié)
 keyboard_layout = [
@@ -19,11 +20,16 @@ keyboard_layout = [
 
 # Fonction pour démarrer/arrêter l'enregistrement des touches
 def on_press(key):
-    global enregistrement, touches_appuyees
+    global enregistrement, touches_appuyees, esc_press_count
 
     try:
         # Si 'Échap' est pressé
         if key == keyboard.Key.esc:
+            esc_press_count += 1
+            if esc_press_count == 2:  # Quitter si Échap est appuyé deux fois
+                print("Programme terminé.")
+                return False  # Arrête l'écoute du clavier
+            
             enregistrement = not enregistrement
             if enregistrement:
                 print("Enregistrement démarré...")
@@ -32,7 +38,9 @@ def on_press(key):
                 print("Enregistrement arrêté.")
                 print(f"Touches enregistrées : {touches_appuyees}")
                 analyser_touches(touches_appuyees)
+        
         elif enregistrement:
+            esc_press_count = 0
             # Ajouter la touche appuyée (en minuscule pour uniformité)
             if hasattr(key, 'char') and key.char is not None:
                 touches_appuyees.append(key.char.lower())
@@ -121,7 +129,7 @@ def creer_clavier(stats):
     cbar.set_label("Nombre d'appuis")
 
     # Afficher le clavier
-    plt.title("Heatmap du clavier (avec opacité)")
+    plt.title("Heatmap du clavier")
     plt.show()
 
 # Démarrer le listener pour enregistrer les touches
