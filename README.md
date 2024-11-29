@@ -1,24 +1,27 @@
-# Keyboard Calibration Project
+# Keylogger Heatmap
 
-This project uses OpenCV to calibrate keyboard key positions from an image and generate a list of key centers. The script detects key positions and outputs the coordinates of their centers.
+Ce projet est un keylogger qui enregistre les appuis de touche et génère :
+- Un histogramme du nombre d'appuis sur chaque touche.
+- Une heatmap interactive affichant les zones les plus utilisées du clavier.
 
-## Features
+## Fonctionnalités
 
-- Detects key positions from an image of a keyboard.
-- Calculates the center of each key and displays the coordinates.
-- Visualizes the detected key centers on the original image.
-- Outputs a numbered list of key centers for further use.
-
-## Requirements
-
-- Python 3.8 or higher
-- The following Python libraries:
-  - `opencv-python`
-  - `numpy`
+- **Enregistrement des touches :** Les frappes sont enregistrées dès qu'on appuie sur `Échap` pour démarrer et arrêtées en appuyant à nouveau sur `Échap`.
+- **Affichage graphique :**
+  - Histogramme : Visualisation du nombre d'appuis par touche.
+  - Heatmap : Affiche une carte à gradient de couleur pour une représentation visuelle du clavier.
+- **Interactivité :** L'application utilise `matplotlib` et `tkinter` pour générer des graphiques et des heatmaps interactifs.
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/keyboard-calibration.git
-   cd keyboard-calibration
+### Prérequis
+
+- Python 3.1
+- Les bibliothèques nécessaires sont listées dans `requirements.txt`.
+
+### Installation des dépendances
+
+Pour installer les dépendances, exécutez :
+
+```bash
+pip install -r requirements.txt

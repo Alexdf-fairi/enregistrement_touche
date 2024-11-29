@@ -1,18 +1,16 @@
 [tool.poetry]
-name = "keyboard-calibration"
-version = "0.1.0"
-description = "A project to calibrate keyboard key positions from an image and generate a list of key centers."
-authors = ["Your Name <your.email@example.com>"]
+name = "keylogger"
+version = "1.0.0"
+description = "Un keylogger qui enregistre les touches du clavier et génère une heatmap interactive basée sur le nombre d'appuis."
+authors = ["Votre Nom <votre.email@example.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://example.com/keyboard-calibration"
-repository = "https://github.com/your-username/keyboard-calibration"
-keywords = ["opencv", "keyboard", "image-processing", "calibration"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-opencv-python = "^4.10.0"
-numpy = "^1.24.0"
+pynput = "^1.7.6"
+matplotlib = "^3.5.0"
+tk = "^0.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
