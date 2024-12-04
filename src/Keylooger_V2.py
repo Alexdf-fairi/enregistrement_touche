@@ -15,8 +15,9 @@ keyboard_layout = [
     ["Tab", "A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "^", "$"],
     ["Caps", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "ù", "Enter"],
     ["Shift", "W", "X", "C", "V", "B", "N", ",", ";", ":", "!", "Shift"],
-    ["Ctrl", "Alt", "Espace", "AltGr", "Ctrl"]
+    ["Ctrl", "Alt", "Espace", "AltGr", "Ctrl"],
 ]
+
 
 # Fonction pour démarrer/arrêter l'enregistrement des touches
 def on_press(key):
@@ -29,24 +30,29 @@ def on_press(key):
             if esc_press_count == 2:  # Quitter si Échap est appuyé deux fois
                 print("Programme terminé.")
                 return False  # Arrête l'écoute du clavier
-            
+
             # Alterner le mode enregistrement
             enregistrement = not enregistrement
             if enregistrement:
                 print("Enregistrement démarré...")
                 touches_appuyees = []  # Réinitialiser les touches
             else:
-                print("Enregistrement arrêté.")
-        
+                print(
+                    "Enregistrement arrêté. Appuyez sur 'Echap' pour afficher les statistiques "
+                )
+
         elif enregistrement:
             esc_press_count = 0  # Réinitialiser le compteur Échap
             # Ajouter la touche appuyée à touches_appuyees
-            if hasattr(key, 'char') and key.char is not None:
+            if hasattr(key, "char") and key.char is not None:
                 touches_appuyees.append(key.char.lower())  # Caractères imprimables
-            elif hasattr(key, 'name') and key.name is not None:
-                touches_appuyees.append(key.name.lower())  # Touches spéciales comme "shift"
+            elif hasattr(key, "name") and key.name is not None:
+                touches_appuyees.append(
+                    key.name.lower()
+                )  # Touches spéciales comme "shift"
     except Exception as e:
         print(f"Erreur lors de l'enregistrement des touches : {e}")
+
 
 # Fonction pour analyser les touches enregistrées
 def analyser_touches(touches):
@@ -62,14 +68,16 @@ def analyser_touches(touches):
     # Générer le clavier heatmap
     creer_clavier(stats)
 
+
 # Fonction pour générer un histogramme
 def generer_histogramme(stats):
     plt.figure(figsize=(10, 6))
-    plt.bar(stats.keys(), stats.values(), color='skyblue')
+    plt.bar(stats.keys(), stats.values(), color="skyblue")
     plt.xlabel("Touches")
     plt.ylabel("Nombre d'appuis")
     plt.title("Histogramme des touches appuyées")
     plt.show()
+
 
 # Fonction pour créer un clavier dynamique avec opacité
 def creer_clavier(stats):
@@ -83,7 +91,7 @@ def creer_clavier(stats):
     fig, ax = plt.subplots(figsize=(15, 7))
     ax.set_xlim(0, 15)
     ax.set_ylim(-7, 0)
-    ax.axis('off')
+    ax.axis("off")
 
     # Dessiner chaque ligne du clavier
     key_width = 1
@@ -95,7 +103,9 @@ def creer_clavier(stats):
         x_offset = 0
         for key in row:
             # Couleur de la touche en fonction des statistiques
-            count = stats.get(key.lower(), 0)  # Statistiques en minuscules pour correspondance
+            count = stats.get(
+                key.lower(), 0
+            )  # Statistiques en minuscules pour correspondance
             base_color = cmap(norm(count))
 
             # Ajouter un canal alpha (opacité)
@@ -103,16 +113,24 @@ def creer_clavier(stats):
 
             # Dessiner la touche comme un rectangle
             rect = patches.Rectangle(
-                (x_offset, y_offset), key_width, key_height,
-                linewidth=1, edgecolor="black", facecolor=rgba_color
+                (x_offset, y_offset),
+                key_width,
+                key_height,
+                linewidth=1,
+                edgecolor="black",
+                facecolor=rgba_color,
             )
             ax.add_patch(rect)
 
             # Afficher le texte de la touche
             ax.text(
-                x_offset + key_width / 2, y_offset + key_height / 2,
+                x_offset + key_width / 2,
+                y_offset + key_height / 2,
                 f"{key}\n{count}",  # Inclure le nombre d'appuis
-                ha="center", va="center", fontsize=8, color="white" if count > 0 else "black"
+                ha="center",
+                va="center",
+                fontsize=8,
+                color="white" if count > 0 else "black",
             )
 
             # Ajuster la position pour la prochaine touche
@@ -131,11 +149,12 @@ def creer_clavier(stats):
     plt.title("Heatmap du clavier")
     plt.show()
 
+
 # Démarrer le listener pour enregistrer les touches
 if __name__ == "__main__":
     with keyboard.Listener(on_press=on_press) as listener:
-        print("Appuyez sur 'Échap' pour commencer/arrêter l'enregistrement.")
-        print("Appuyez deux fois sur 'Échap' pour terminer le programme.")
+        print("Appuyez sur 'Echap' pour commencer l'enregistrement.")
+        print("Appuyez sur 'Echap' pour terminer l'enregistrement.")
         listener.join()
 
     # Après l'arrêt du listener, analyser les touches dans le thread principal
