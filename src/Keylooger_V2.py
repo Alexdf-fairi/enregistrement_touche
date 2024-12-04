@@ -30,22 +30,21 @@ def on_press(key):
                 print("Programme terminé.")
                 return False  # Arrête l'écoute du clavier
             
+            # Alterner le mode enregistrement
             enregistrement = not enregistrement
             if enregistrement:
                 print("Enregistrement démarré...")
                 touches_appuyees = []  # Réinitialiser les touches
             else:
                 print("Enregistrement arrêté.")
-                print(f"Touches enregistrées : {touches_appuyees}")
-                analyser_touches(touches_appuyees)
         
         elif enregistrement:
-            esc_press_count = 0
-            # Ajouter la touche appuyée (en minuscule pour uniformité)
+            esc_press_count = 0  # Réinitialiser le compteur Échap
+            # Ajouter la touche appuyée à touches_appuyees
             if hasattr(key, 'char') and key.char is not None:
-                touches_appuyees.append(key.char.lower())
+                touches_appuyees.append(key.char.lower())  # Caractères imprimables
             elif hasattr(key, 'name') and key.name is not None:
-                touches_appuyees.append(key.name.lower())
+                touches_appuyees.append(key.name.lower())  # Touches spéciales comme "shift"
     except Exception as e:
         print(f"Erreur lors de l'enregistrement des touches : {e}")
 
@@ -133,6 +132,11 @@ def creer_clavier(stats):
     plt.show()
 
 # Démarrer le listener pour enregistrer les touches
-with keyboard.Listener(on_press=on_press) as listener:
-    print("Appuyez sur 'Échap' pour commencer/arrêter l'enregistrement.")
-    listener.join()
+if __name__ == "__main__":
+    with keyboard.Listener(on_press=on_press) as listener:
+        print("Appuyez sur 'Échap' pour commencer/arrêter l'enregistrement.")
+        print("Appuyez deux fois sur 'Échap' pour terminer le programme.")
+        listener.join()
+
+    # Après l'arrêt du listener, analyser les touches dans le thread principal
+    analyser_touches(touches_appuyees)
