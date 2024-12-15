@@ -1,17 +1,45 @@
-[tool.poetry]
+[project]
 name = "keylogger"
 version = "1.0.0"
-description = "Un keylogger qui enregistre les touches du clavier et génère une heatmap interactive basée sur le nombre d'appuis."
-authors = ["Votre Nom <votre.email@example.com>"]
-license = "MIT"
+authors = [
+    {name = "Theo Nolius", email = "theo.nolius@estaca.eu"},
+    {name = "Alexandre du Hamel de Fougeroux", email = "alexandre.duhameldefougeroux@estaca.eu"}
+]
+description = "Application de visualisation des frappes clavier avec heatmap et histogramme."
 readme = "README.md"
+license = "MIT"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-pynput = "^1.7.6"
-matplotlib = "^3.5.0"
-tk = "^0.1.0"
+# Liste des dépendances principales pour le projet
+dependencies = [
+    "pynput",             # Gestion des événements clavier
+    "matplotlib",         # Visualisation des données
+    "collections",        # Gestion des structures de données (Counter)
+]
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+# Dépendances optionnelles pour le développement
+[project.optional-dependencies]
+dev = [
+    "pytest",             # Framework de tests unitaires
+    "coverage",           # Outil pour mesurer la couverture des tests
+    "black",              # Outil de formatage du code
+
+]
+
+# Définir les scripts à exécuter
+[project.scripts]
+keylogger-visualisation = "keylogger_visualisation.scripts.main:main"
+
+# Configuration pour la couverture de code
+[tool.coverage.run]
+omit = [
+    "tests/",             # Ne pas inclure les fichiers de tests dans la couverture
+]
+
+# Configuration de black pour le formatage du code
+[tool.black]
+line-length = 88          # Limite de longueur de ligne de 88 caractères (valeur par défaut)
+target-version = ['py38'] # Cibler la version Python 3.8 et supérieure
+
+# Configuration de isort pour trier les imports selon le style black
+[tool.isort]
+profile = "black"         # Utiliser le profil de style 'black' pour le tri des imports
