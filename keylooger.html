@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keylogger V2 Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-left: 5px solid #333;
+            overflow-x: auto;
+        }
+
+        .code-block {
+            font-family: monospace;
+            background: #e8e8e8;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .theme-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .theme-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Keylogger V2 Documentation</h1>
+        <p>Automatically generated using Sphinx-like tools.</p>
+    </header>
+
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                Keylogger V2 is a Python-based keylogger tool designed for monitoring keyboard activity.
+                This project uses structured documentation formats like reStructuredText (RST) or Markdown,
+                which are converted into HTML using Sphinx or similar tools.
+            </p>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <ul>
+                <li>Written in Python</li>
+                <li>Uses <code>pynput</code> for capturing keyboard inputs</li>
+                <li>Records pressed keys and provides analysis</li>
+                <li>Generates visual outputs such as histograms and keyboard heatmaps using <code>matplotlib</code></li>
+                <li>Switches recording on/off using the <kbd>Esc</kbd> key</li>
+            </ul>
+        </section>
+
+        <section id="usage">
+            <h2>Usage</h2>
+            <p>
+                The program starts in idle mode. Press <kbd>Esc</kbd> to start recording keystrokes. 
+                Press <kbd>Esc</kbd> again to stop recording. After two presses of <kbd>Esc</kbd>, 
+                the program terminates and generates statistics.
+            </p>
+            <pre>
+# To start the program, use:
+python keylogger_v2.py
+            </pre>
+        </section>
+
+        <section id="documentation">
+            <h2>Documentation Structure</h2>
+            <p>The following documentation structure was used:</p>
+            <ul>
+                <li>Keylogger script with modularized functions</li>
+                <li>Docstrings for each function to explain purpose and parameters</li>
+                <li>Program arguments documented for CLI usage</li>
+                <li>Visualization of key usage statistics (CLI-based and graphical)</li>
+            </ul>
+        </section>
+
+        <section id="themes">
+            <h2>Themes and Styles</h2>
+            <p>
+                The documentation uses popular themes such as <span class="theme-link"><a href="https://readthedocs.org/">ReadTheDocs</a></span>.
+                These themes make navigation and readability of the documentation easier.
+            </p>
+        </section>
+
+        <section id="code-example">
+            <h2>Example Code</h2>
+            <p>Below is an excerpt from the Keylogger V2 project:</p>
+            <pre>
+from pynput import keyboard
+from collections import Counter
+import matplotlib.pyplot as plt
+
+# Global variables
+pressed_keys = []
+recording = False
+esc_count = 0
+
+# Function to start/stop recording
+def handle_key_press(key):
+    global recording, pressed_keys, esc_count
+    if key == keyboard.Key.esc:
+        esc_count += 1
+        if esc_count == 2:
+            return False  # Exit program
+        recording = not recording
+    elif recording:
+        if hasattr(key, 'char') and key.char:
+            pressed_keys.append(key.char.lower())
+
+# Run keylogger
+with keyboard.Listener(on_press=handle_key_press) as listener:
+    listener.join()
+            </pre>
+        </section>
+
+        <section id="visualizations">
+            <h2>Visualizations</h2>
+            <p>
+                The program generates the following visualizations after analysis:
+            </p>
+            <ul>
+                <li><strong>Histogram:</strong> Displays the frequency of key presses.</li>
+                <li><strong>Keyboard Heatmap:</strong> A heatmap of keyboard usage intensity.</li>
+            </ul>
+            <pre class="code-block">
+# Example of generating a histogram
+plt.bar(stats.keys(), stats.values())
+plt.title("Histogram of Key Presses")
+plt.show()
+            </pre>
+        </section>
+    </main>
+</body>
+</html>
