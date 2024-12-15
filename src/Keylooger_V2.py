@@ -1,3 +1,15 @@
+"""
+Keylogger_V2.py
+================
+
+Ce script permet d'enregistrer les touches pressées sur un clavier et d'analyser les statistiques des touches utilisées. Il génère également une heatmap du clavier et un histogramme des touches pressées.
+
+Modules requis :
+- pynput
+- matplotlib
+- collections
+"""
+
 from pynput import keyboard
 from collections import Counter
 import matplotlib.pyplot as plt
@@ -21,6 +33,14 @@ keyboard_layout = [
 
 # Fonction pour démarrer/arrêter l'enregistrement des touches
 def on_press(key):
+    """
+    Fonction qui capture les touches pressées.
+
+    Args:
+        key (pynput.keyboard.Key): La touche pressée.
+
+    Si la touche 'Échap' est pressée, l'enregistrement commence ou s'arrête. Si 'Échap' est pressé deux fois, le programme se termine.
+    """
     global enregistrement, touches_appuyees, esc_press_count
 
     try:
@@ -56,6 +76,12 @@ def on_press(key):
 
 # Fonction pour analyser les touches enregistrées
 def analyser_touches(touches):
+    """
+    Fonction pour analyser les touches enregistrées et générer des statistiques.
+
+    Args:
+        touches (list): Liste des touches enregistrées.
+    """
     stats = Counter(touches)
 
     print("\nStatistiques des touches pressées :")
@@ -71,6 +97,12 @@ def analyser_touches(touches):
 
 # Fonction pour générer un histogramme
 def generer_histogramme(stats):
+    """
+    Génère un histogramme des touches appuyées.
+
+    Args:
+        stats (Counter): Dictionnaire des statistiques des touches pressées.
+    """
     plt.figure(figsize=(10, 6))
     plt.bar(stats.keys(), stats.values(), color="skyblue")
     plt.xlabel("Touches")
@@ -81,6 +113,12 @@ def generer_histogramme(stats):
 
 # Fonction pour créer un clavier dynamique avec opacité
 def creer_clavier(stats):
+    """
+    Génère une heatmap du clavier en fonction des touches pressées.
+
+    Args:
+        stats (Counter): Dictionnaire des statistiques des touches pressées.
+    """
     max_count = max(stats.values(), default=1)  # Pour normaliser les couleurs
 
     # Définir la colormap
@@ -152,6 +190,9 @@ def creer_clavier(stats):
 
 # Démarrer le listener pour enregistrer les touches
 if __name__ == "__main__":
+    """
+    Démarre le programme et commence à écouter les touches.
+    """
     with keyboard.Listener(on_press=on_press) as listener:
         print("Appuyez sur 'Echap' pour commencer l'enregistrement.")
         print("Appuyez sur 'Echap' pour terminer l'enregistrement.")
